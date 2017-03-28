@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 //http://localhost:8080/spring-rest/ex/bars?id=100&second=something
 @RestController
-@RequestMapping("/personne")
+@RequestMapping("/personnes")
 public class PersonneController {
 
     @Autowired
     PersonneService personneService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/", params = {"nom", "prenom"})
+    @RequestMapping(method = RequestMethod.GET, value = "/personne", params = {"nom", "prenom"})
     public Personne readPersonne(@RequestParam("nom") String nom, @RequestParam("prenom") String prenom) {
         return personneService.findByNomAndPrenom(nom, prenom);
     }

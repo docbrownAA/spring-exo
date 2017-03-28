@@ -26,7 +26,7 @@ public class ApplicationDataSource {
         dataSource.setDriverClass(environment.getRequiredProperty("spring.datasource.driverClassName"));
         dataSource.setJdbcUrl(environment.getRequiredProperty("spring.datasource.url"));
         dataSource.setUsername(environment.getRequiredProperty("spring.datasource.username"));
-        dataSource.setPassword(environment.getRequiredProperty("spring.datasource.password"));
+        //dataSource.setPassword(environment.getRequiredProperty("spring.datasource.password"));
         return dataSource;
     }
 }
