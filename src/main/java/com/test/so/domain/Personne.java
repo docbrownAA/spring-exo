@@ -36,8 +36,9 @@ public class Personne extends EntiteGenerique implements Serializable {
     @Column(nullable = true)
     @JsonManagedReference
     Collection<Telephone> telephones;
-    
-    @OneToOne(mappedBy ="personne", fetch = FetchType.EAGER)
+
+    @OneToOne(mappedBy = "personne")
+    @JsonManagedReference
     PersonneDetail personneDetail;
 
     public Collection<Telephone> getTelephones() {
@@ -70,6 +71,14 @@ public class Personne extends EntiteGenerique implements Serializable {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public PersonneDetail getPersonneDetail() {
+        return personneDetail;
+    }
+
+    public void setPersonneDetail(PersonneDetail personneDetail) {
+        this.personneDetail = personneDetail;
     }
 
 }

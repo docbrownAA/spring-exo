@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 24 Mars 2017 à 15:34
+-- Généré le :  Mar 28 Mars 2017 à 13:59
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -26,11 +26,14 @@ SET time_zone = "+00:00";
 -- Structure de la table `adresse`
 --
 
-CREATE TABLE `adresse` (
+DROP TABLE IF EXISTS `adresse`;
+CREATE TABLE IF NOT EXISTS `adresse` (
   `id` int(11) NOT NULL,
   `libelle` varchar(255) NOT NULL,
-  `id_ville` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `id_ville` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_adresse_ville_idx` (`id_ville`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `adresse`
@@ -45,10 +48,12 @@ INSERT INTO `adresse` (`id`, `libelle`, `id_ville`) VALUES
 -- Structure de la table `langue`
 --
 
-CREATE TABLE `langue` (
+DROP TABLE IF EXISTS `langue`;
+CREATE TABLE IF NOT EXISTS `langue` (
   `id` int(11) NOT NULL,
-  `nom` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `nom` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `langue`
@@ -64,13 +69,15 @@ INSERT INTO `langue` (`id`, `nom`) VALUES
 -- Structure de la table `pays`
 --
 
-CREATE TABLE `pays` (
+DROP TABLE IF EXISTS `pays`;
+CREATE TABLE IF NOT EXISTS `pays` (
   `id` int(11) NOT NULL,
   `monnaie` varchar(255) NOT NULL,
   `nom` varchar(255) NOT NULL,
   `population` bigint(20) NOT NULL,
-  `continent` varchar(45) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `continent` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `pays`
@@ -85,10 +92,13 @@ INSERT INTO `pays` (`id`, `monnaie`, `nom`, `population`, `continent`) VALUES
 -- Structure de la table `pays_langue`
 --
 
-CREATE TABLE `pays_langue` (
+DROP TABLE IF EXISTS `pays_langue`;
+CREATE TABLE IF NOT EXISTS `pays_langue` (
   `id_langue` int(11) NOT NULL,
-  `id_pays` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `id_pays` int(11) NOT NULL,
+  KEY `fk_pays_langue_pays_id` (`id_pays`),
+  KEY `fk_pays_langue_langue_id` (`id_langue`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `pays_langue`
@@ -103,12 +113,15 @@ INSERT INTO `pays_langue` (`id_langue`, `id_pays`) VALUES
 -- Structure de la table `personne`
 --
 
-CREATE TABLE `personne` (
+DROP TABLE IF EXISTS `personne`;
+CREATE TABLE IF NOT EXISTS `personne` (
   `id` int(11) NOT NULL,
   `date_naissance` date NOT NULL,
   `nom` varchar(100) NOT NULL,
-  `prenom` varchar(100) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `prenom` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nom` (`nom`,`prenom`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `personne`
@@ -124,13 +137,16 @@ INSERT INTO `personne` (`id`, `date_naissance`, `nom`, `prenom`) VALUES
 -- Structure de la table `personne_adresse`
 --
 
-CREATE TABLE `personne_adresse` (
+DROP TABLE IF EXISTS `personne_adresse`;
+CREATE TABLE IF NOT EXISTS `personne_adresse` (
   `id_adresse` int(11) NOT NULL,
   `id_personne` int(11) NOT NULL,
   `debut` date NOT NULL,
   `fin` date DEFAULT NULL,
-  `principale` bit(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `principale` bit(1) NOT NULL,
+  KEY `adresse_personne` (`id_adresse`,`id_personne`),
+  KEY `fk_personne_adresse_personne_idx` (`id_personne`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `personne_adresse`
@@ -146,12 +162,15 @@ INSERT INTO `personne_adresse` (`id_adresse`, `id_personne`, `debut`, `fin`, `pr
 -- Structure de la table `personne_detail`
 --
 
-CREATE TABLE `personne_detail` (
+DROP TABLE IF EXISTS `personne_detail`;
+CREATE TABLE IF NOT EXISTS `personne_detail` (
   `num_secu` varchar(255) NOT NULL,
   `sexe` varchar(255) NOT NULL,
   `id` int(11) NOT NULL,
-  `id_personne` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `id_personne` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_personne_detail_personne_id` (`id_personne`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `personne_detail`
@@ -167,12 +186,14 @@ INSERT INTO `personne_detail` (`num_secu`, `sexe`, `id`, `id_personne`) VALUES
 -- Structure de la table `telephone`
 --
 
-CREATE TABLE `telephone` (
+DROP TABLE IF EXISTS `telephone`;
+CREATE TABLE IF NOT EXISTS `telephone` (
   `id` int(11) NOT NULL,
   `libelle` varchar(255) NOT NULL,
   `numero` varchar(255) NOT NULL,
-  `id_personne` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `id_personne` int(11) DEFAULT NULL,
+  KEY `fk_telephone_personne_idx` (`id_personne`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `telephone`
@@ -189,13 +210,16 @@ INSERT INTO `telephone` (`id`, `libelle`, `numero`, `id_personne`) VALUES
 -- Structure de la table `ville`
 --
 
-CREATE TABLE `ville` (
+DROP TABLE IF EXISTS `ville`;
+CREATE TABLE IF NOT EXISTS `ville` (
   `id` int(11) NOT NULL,
   `capital` bit(1) NOT NULL,
   `code_postal` varchar(255) NOT NULL,
   `nom` varchar(255) NOT NULL,
-  `id_pays` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `id_pays` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_ville_pays_idx` (`id_pays`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `ville`
@@ -207,68 +231,46 @@ INSERT INTO `ville` (`id`, `capital`, `code_postal`, `nom`, `id_pays`) VALUES
 (3, b'0', '31120', 'Pinsaguel', 1);
 
 --
--- Index pour les tables exportées
+-- Contraintes pour les tables exportées
 --
 
 --
--- Index pour la table `adresse`
+-- Contraintes pour la table `adresse`
 --
 ALTER TABLE `adresse`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_adresse_ville_id` (`id_ville`);
+  ADD CONSTRAINT `fk_adresse_ville` FOREIGN KEY (`id_ville`) REFERENCES `ville` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Index pour la table `langue`
---
-ALTER TABLE `langue`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `pays`
---
-ALTER TABLE `pays`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `pays_langue`
+-- Contraintes pour la table `pays_langue`
 --
 ALTER TABLE `pays_langue`
-  ADD KEY `fk_pays_langue_pays_id` (`id_pays`),
-  ADD KEY `fk_pays_langue_langue_id` (`id_langue`);
+  ADD CONSTRAINT `fk_pays_langue_langue_id` FOREIGN KEY (`id_langue`) REFERENCES `langue` (`id`),
+  ADD CONSTRAINT `fk_pays_langue_pays_id` FOREIGN KEY (`id_pays`) REFERENCES `pays` (`id`);
 
 --
--- Index pour la table `personne`
---
-ALTER TABLE `personne`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `nom` (`nom`,`prenom`);
-
---
--- Index pour la table `personne_adresse`
+-- Contraintes pour la table `personne_adresse`
 --
 ALTER TABLE `personne_adresse`
-  ADD KEY `fk_personne_adresse_personne_id` (`id_personne`),
-  ADD KEY `fk_personne_adresse_adresse_id` (`id_adresse`);
+  ADD CONSTRAINT `fk_personne_adresse_adresse` FOREIGN KEY (`id_adresse`) REFERENCES `adresse` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_personne_adresse_personne` FOREIGN KEY (`id_personne`) REFERENCES `personne` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Index pour la table `personne_detail`
+-- Contraintes pour la table `personne_detail`
 --
 ALTER TABLE `personne_detail`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_personne_detail_personne_id` (`id_personne`);
+  ADD CONSTRAINT `fk_personne_detail_personne_id` FOREIGN KEY (`id_personne`) REFERENCES `personne` (`id`);
 
 --
--- Index pour la table `telephone`
+-- Contraintes pour la table `telephone`
 --
 ALTER TABLE `telephone`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_telephone_personne_id` (`id_personne`) USING BTREE;
+  ADD CONSTRAINT `fk_telephone_personne` FOREIGN KEY (`id_personne`) REFERENCES `personne` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Index pour la table `ville`
+-- Contraintes pour la table `ville`
 --
 ALTER TABLE `ville`
-  ADD KEY `fk_ville_pays_id` (`id_pays`);
+  ADD CONSTRAINT `fk_ville_pays` FOREIGN KEY (`id_pays`) REFERENCES `pays` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
