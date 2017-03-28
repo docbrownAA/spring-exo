@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,6 +42,20 @@ public class Personne extends EntiteGenerique implements Serializable {
     @OneToOne(mappedBy = "personne")
     @JsonManagedReference
     PersonneDetail personneDetail;
+    
+    @OneToMany(mappedBy = "personne")
+    @JsonManagedReference
+    private Set<PersonneAdresse> adresses = new HashSet<PersonneAdresse>();
+
+    public Set<PersonneAdresse> getAdresses() {
+        return adresses;
+    }
+
+    public void setAdresses(Set<PersonneAdresse> adresses) {
+        this.adresses = adresses;
+    }
+    
+    
 
     public Collection<Telephone> getTelephones() {
         return telephones;
