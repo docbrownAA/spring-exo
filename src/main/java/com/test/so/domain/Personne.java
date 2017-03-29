@@ -12,6 +12,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -27,36 +29,44 @@ import javax.persistence.TemporalType;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class Personne extends EntiteGenerique implements Serializable {
+public class Personne implements Serializable {
 
-    @Temporal(TemporalType.DATE)
+    private int id;
     private Date date_naissance;
     private String nom;
     private String prenom;
 
-    @OneToMany(mappedBy = "personne", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Column(nullable = true)
     @JsonManagedReference
     Collection<Telephone> telephones;
 
-    @OneToOne(mappedBy = "personne")
     @JsonManagedReference
     PersonneDetail personneDetail;
-    
-    @OneToMany(mappedBy = "personne")
+
+    @Id
+    @GeneratedValue
+    @Column(name = "id_personne")
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @JsonManagedReference
-    private Set<PersonneAdresse> adresses = new HashSet<PersonneAdresse>();
+    private Set<PersonneAdresse> personnesAdresses = new HashSet<PersonneAdresse>();
 
-    public Set<PersonneAdresse> getAdresses() {
-        return adresses;
+    @OneToMany(mappedBy = "primaryKey.personne", cascade = CascadeType.ALL)
+    public Set<PersonneAdresse> getPersonnesAdresses() {
+        return personnesAdresses;
     }
 
-    public void setAdresses(Set<PersonneAdresse> adresses) {
-        this.adresses = adresses;
+    public void setPersonnesAdresses(Set<PersonneAdresse> personnesAdresses) {
+        this.personnesAdresses = personnesAdresses;
     }
-    
-    
 
+    @OneToMany(mappedBy = "personne", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Column(nullable = true)
     public Collection<Telephone> getTelephones() {
         return telephones;
     }
@@ -65,6 +75,7 @@ public class Personne extends EntiteGenerique implements Serializable {
         this.telephones = telephones;
     }
 
+    @Temporal(TemporalType.DATE)
     public Date getDate_naissance() {
         return date_naissance;
     }
@@ -89,6 +100,7 @@ public class Personne extends EntiteGenerique implements Serializable {
         this.prenom = prenom;
     }
 
+    @OneToOne(mappedBy = "personne")
     public PersonneDetail getPersonneDetail() {
         return personneDetail;
     }

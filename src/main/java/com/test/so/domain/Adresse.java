@@ -4,7 +4,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 /**
@@ -12,22 +16,34 @@ import javax.persistence.OneToMany;
  * @author GDUVINAGE
  */
 @Entity
-public class Adresse extends EntiteGenerique implements Serializable{
-    
-    private  String libelle;
-    
-    @OneToMany(mappedBy = "adresse")
+public class Adresse implements Serializable {
+
+    private String libelle;
+    private int id;
+
+    @Id
+    @GeneratedValue
+    @Column(name = "id_adresse")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @JsonManagedReference
-    private Set<PersonneAdresse> personnes = new HashSet<PersonneAdresse>();
+    private Set<PersonneAdresse> personneAdresses = new HashSet<PersonneAdresse>();
 
-    public Set<PersonneAdresse> getPersonnes() {
-        return personnes;
+    @OneToMany(mappedBy = "primaryKey.adresse", cascade = CascadeType.ALL)
+    public Set<PersonneAdresse> getPersonneAdresses() {
+        return personneAdresses;
     }
 
-    public void setPersonnes(Set<PersonneAdresse> personnes) {
-        this.personnes = personnes;
+    public void setPersonneAdresses(Set<PersonneAdresse> personneAdresses) {
+        this.personneAdresses = personneAdresses;
     }
-    
+
     public String getLibelle() {
         return libelle;
     }
@@ -35,6 +51,5 @@ public class Adresse extends EntiteGenerique implements Serializable{
     public void setLibelle(String libelle) {
         this.libelle = libelle;
     }
-    
-    
+
 }

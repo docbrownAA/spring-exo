@@ -5,16 +5,17 @@
  */
 package com.test.so.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.AssociationOverride;
+import javax.persistence.AssociationOverrides;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -22,48 +23,37 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "personne_adresse")
+@AssociationOverrides({
+    @AssociationOverride(name = "primaryKey.adresse", joinColumns = @JoinColumn(name = "id_adresse")),
+    @AssociationOverride(name = "primaryKey.personne", joinColumns = @JoinColumn(name = "id_personne"))
+})
 public class PersonneAdresse implements Serializable {
 
-    @EmbeddedId
-    PersonneAdresseId pk;
+    private PersonneAdressePk primaryKey = new PersonneAdressePk();
 
-    @Temporal(TemporalType.DATE)
     private Date debut;
-    @Temporal(TemporalType.DATE)
     private Date fin;
-
     private boolean principale;
-
-    @JoinColumn(name = "id_adresse", referencedColumnName = "id",
-            insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    @JsonBackReference
-    private Adresse adresse;
-    @JoinColumn(name = "id_personne", referencedColumnName = "id",
-            insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    @JsonBackReference
-    private Personne personne;
 
     public PersonneAdresse() {
     }
 
-    public PersonneAdresse(PersonneAdresseId personneAdresseId) {
-        this.pk = personneAdresseId;
+    public PersonneAdresse(Date debut, Date fin, boolean principale) {
+        this.debut = debut;
+        this.fin = fin;
+        this.principale = principale;
     }
 
-    public PersonneAdresse(int idPersonne, int idAdresse) {
-        this.pk = new PersonneAdresseId(idPersonne, idAdresse);
+    @EmbeddedId
+    public PersonneAdressePk getPrimaryKey() {
+        return primaryKey;
     }
 
-    public PersonneAdresseId getPk() {
-        return pk;
+    public void setPrimaryKey(PersonneAdressePk primaryKey) {
+        this.primaryKey = primaryKey;
     }
 
-    public void setPk(PersonneAdresseId pk) {
-        this.pk = pk;
-    }
-
+    @Temporal(TemporalType.DATE)
     public Date getDebut() {
         return debut;
     }
@@ -72,6 +62,7 @@ public class PersonneAdresse implements Serializable {
         this.debut = debut;
     }
 
+    @Temporal(TemporalType.DATE)
     public Date getFin() {
         return fin;
     }
@@ -88,20 +79,22 @@ public class PersonneAdresse implements Serializable {
         this.principale = principale;
     }
 
-    public Adresse getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(Adresse adresse) {
-        this.adresse = adresse;
-    }
-
+    @Transient
     public Personne getPersonne() {
-        return personne;
+        return getPrimaryKey().getPersonne();
     }
 
     public void setPersonne(Personne personne) {
-        this.personne = personne;
+        getPrimaryKey().setPersonne(personne);
+    }
+
+    @Transient
+    public Adresse getAdresse() {
+        return getPrimaryKey().getAdresse();
+    }
+
+    public void setAdresse(Adresse adresse) {
+        getPrimaryKey().setAdresse(adresse);
     }
 
 }

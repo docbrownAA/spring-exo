@@ -25,7 +25,7 @@ import javax.persistence.Table;
 public class PersonneDetail extends EntiteGenerique implements Serializable {
 
     @OneToOne
-    @JoinColumn(name = "id_personne", referencedColumnName = "id")
+    @JoinColumn(name = "id_personne", referencedColumnName = "id_personne")
     Personne personne;
 
     @Column(name = "num_secu")
