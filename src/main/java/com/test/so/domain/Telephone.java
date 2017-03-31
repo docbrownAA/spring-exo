@@ -2,6 +2,7 @@ package com.test.so.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -25,7 +26,7 @@ public class Telephone extends EntiteGenerique implements java.io.Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_personne")
-    @JsonBackReference
+    @JsonIgnoreProperties("telephones")
     private Personne personne;
 
     public Personne getPersonne() {

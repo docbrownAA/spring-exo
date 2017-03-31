@@ -5,14 +5,17 @@ import com.test.so.domain.Pays;
 import com.test.so.repository.PaysRepository;
 import com.test.so.service.PaysService;
 import java.util.Collection;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author GDUVINAGE
  */
+@Service
 public class PaysServiceImpl implements PaysService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TelephoneController.class);
@@ -34,5 +37,12 @@ public class PaysServiceImpl implements PaysService {
 
         }
     }
+
+    @Override
+    public Collection<Pays> findAll() {
+       return paysRepository.findAll();
+    }
+
+    
 
 }

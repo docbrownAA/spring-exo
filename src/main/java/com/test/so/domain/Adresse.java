@@ -1,14 +1,17 @@
 package com.test.so.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -18,8 +21,21 @@ import javax.persistence.OneToMany;
 @Entity
 public class Adresse implements Serializable {
 
-    private String libelle;
     private int id;
+    private String libelle;
+    @JsonIgnoreProperties("adresses")
+    private Ville ville;
+
+    @JsonIgnoreProperties("adresse")
+    private Set<PersonneAdresse> personneAdresses = new HashSet<PersonneAdresse>();
+
+    public Adresse() {
+    }
+
+    public Adresse(String libelle, int id) {
+        this.libelle = libelle;
+        this.id = id;
+    }
 
     @Id
     @GeneratedValue
@@ -32,12 +48,19 @@ public class Adresse implements Serializable {
         this.id = id;
     }
 
-    @JsonManagedReference
-    private Set<PersonneAdresse> personneAdresses = new HashSet<PersonneAdresse>();
-
-    @OneToMany(mappedBy = "primaryKey.adresse", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "adresse")
     public Set<PersonneAdresse> getPersonneAdresses() {
         return personneAdresses;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "id_ville")
+    public Ville getVille() {
+        return ville;
+    }
+
+    public void setVille(Ville ville) {
+        this.ville = ville;
     }
 
     public void setPersonneAdresses(Set<PersonneAdresse> personneAdresses) {

@@ -1,6 +1,7 @@
 package com.test.so.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
@@ -36,11 +37,26 @@ public class Personne implements Serializable {
     private String nom;
     private String prenom;
 
-    @JsonManagedReference
+    @JsonIgnoreProperties("personne")
     Collection<Telephone> telephones;
 
-    @JsonManagedReference
+    @JsonIgnoreProperties("personne")
     PersonneDetail personneDetail;
+
+    @JsonIgnoreProperties("personne")
+    private Set<PersonneAdresse> personnesAdresses = new HashSet<PersonneAdresse>();
+
+    public Personne() {
+    }
+
+    public Personne(int id, Date date_naissance, String nom, String prenom, Collection<Telephone> telephones, PersonneDetail personneDetail) {
+        this.id = id;
+        this.date_naissance = date_naissance;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.telephones = telephones;
+        this.personneDetail = personneDetail;
+    }
 
     @Id
     @GeneratedValue
@@ -53,10 +69,7 @@ public class Personne implements Serializable {
         this.id = id;
     }
 
-    @JsonManagedReference
-    private Set<PersonneAdresse> personnesAdresses = new HashSet<PersonneAdresse>();
-
-    @OneToMany(mappedBy = "primaryKey.personne", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "personne")
     public Set<PersonneAdresse> getPersonnesAdresses() {
         return personnesAdresses;
     }
