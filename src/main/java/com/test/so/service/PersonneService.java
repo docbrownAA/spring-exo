@@ -16,4 +16,5 @@ public interface PersonneService {
     Personne findById(Integer id);
     Collection<Personne> findAll();
     Personne findByNomAndPrenom(String nom, String prenom);
+    Personne create(Personne personne);
 }

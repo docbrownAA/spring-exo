@@ -39,12 +39,7 @@ public class AdresseController {
 
     @RequestMapping(method = RequestMethod.GET, params = {"ville"})
     public Collection<Adresse> readAdressesByVille(@RequestParam("ville") String ville) {
-        Collection<Adresse> result = new ArrayList<Adresse>();
-        Collection<Ville> villes = villeService.findByNom(ville);
-        for (Ville ville1 : villes) {
-            result.addAll(adresseService.findByVille(ville1));
-        }
-        return result;
+        return adresseService.findByVilleNom(ville);
     }
 
 }

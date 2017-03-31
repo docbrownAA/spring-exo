@@ -11,5 +11,5 @@ import java.util.Collection;
 public interface AdresseService {
     Collection<Adresse> findByLibelleContaining(String libelle);
     Collection<Adresse> findAll();
-    Collection<Adresse> findByVille(Ville ville);
+    Collection<Adresse> findByVilleNom(String nom);
 }

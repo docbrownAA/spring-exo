@@ -4,6 +4,11 @@ import com.test.so.domain.Personne;
 import com.test.so.service.PersonneService;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,4 +35,16 @@ public class PersonneController {
     public Collection<Personne> readPersonnes() {
         return personneService.findAll();
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{id_personne}")
+    public Personne readOnePersonne(@PathVariable("id_personne") int idPersonne) {
+        return personneService.findById(idPersonne);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity createPersonne(@RequestBody Personne personne) {
+        return new ResponseEntity(personneService.create(personne), HttpStatus.OK);
+    }
+
 }

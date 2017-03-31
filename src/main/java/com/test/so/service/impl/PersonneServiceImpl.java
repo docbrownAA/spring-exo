@@ -26,11 +26,16 @@ public class PersonneServiceImpl implements PersonneService {
     public Personne findByNomAndPrenom(String nom, String prenom) {
         return personneRepository.findByNomAndPrenom(nom, prenom);
     }
-    
+
     @Override
-    public Collection<Personne> findAll(){
+    public Collection<Personne> findAll() {
         return personneRepository.findAll();
-        
+
+    }
+
+    @Override
+    public Personne create(Personne personne) {
+        return personneRepository.save(personne);
     }
 
 }

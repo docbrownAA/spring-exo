@@ -19,5 +19,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AdresseRepository extends JpaRepository<Adresse, Integer>{
     Collection<Adresse> findByLibelleContaining(String libelle);
-    Collection<Adresse> findByVille(Ville ville);
+    Collection<Adresse> findByVilleNom(String nom);
 }

@@ -5,7 +5,6 @@
  */
 package com.test.so.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
@@ -89,7 +88,6 @@ public class Ville implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_pays")
-    @JsonManagedReference
     public Pays getPays() {
         return pays;
     }

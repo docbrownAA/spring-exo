@@ -22,4 +22,9 @@ public class PersonneDetailServiceImpl implements PersonneDetailService {
         return personneDetailRepository.findByPersonne(personne);
     }
 
+    @Override
+    public PersonneDetail create(PersonneDetail personneDetail) {
+        return personneDetailRepository.save(personneDetail);
+    }
+
 }
