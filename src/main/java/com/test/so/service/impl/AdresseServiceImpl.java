@@ -33,5 +33,12 @@ public class AdresseServiceImpl implements AdresseService {
     public Collection<Adresse> findByVilleNom(String nom){
         return adresseRepository.findByVilleNom(nom);
     }
+
+    @Override
+    public Adresse save(Adresse adresse) {
+       return adresseRepository.save(adresse);
+    }
+    
+    
     
 }

@@ -12,4 +12,5 @@ public interface AdresseService {
     Collection<Adresse> findByLibelleContaining(String libelle);
     Collection<Adresse> findAll();
     Collection<Adresse> findByVilleNom(String nom);
+    Adresse save(Adresse adresse);
 }

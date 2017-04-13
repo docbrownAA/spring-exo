@@ -17,4 +17,5 @@ public interface PersonneService {
     Collection<Personne> findAll();
     Personne findByNomAndPrenom(String nom, String prenom);
     Personne create(Personne personne);
+    void delete(Personne personne);
 }

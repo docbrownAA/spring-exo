@@ -37,5 +37,11 @@ public class VilleServiceImpl implements VilleService {
     public Collection<Ville> findByCodePostalContaining(String codePostal) {
         return villeRepository.findByCodePostalContaining(codePostal);
     }
+
+    @Override
+    public Collection<Ville> findAll() {
+        return villeRepository.findAll();
+    }
+    
     
 }

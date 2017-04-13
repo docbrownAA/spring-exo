@@ -18,4 +18,5 @@ public interface VilleService {
     Collection<Ville> findByNomContainig(String like);
     Collection<Ville> findByPays(Pays pays);
     Collection<Ville> findByCodePostalContaining(String codePostal);
+    Collection<Ville> findAll();
 }

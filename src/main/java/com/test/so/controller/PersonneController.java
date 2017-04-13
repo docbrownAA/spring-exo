@@ -47,4 +47,15 @@ public class PersonneController {
         return new ResponseEntity(personneService.create(personne), HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.DELETE, value = "/personne/{id_personne}")
+    public ResponseEntity delete(@PathVariable("id_personne") int idPersonne) {
+        Personne personne = personneService.findById(idPersonne);
+        if (personne == null) {
+            System.out.println("Impossible de tourver la personne:" + idPersonne);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        personneService.delete(personne);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
 }
