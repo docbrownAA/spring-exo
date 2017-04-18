@@ -2,7 +2,6 @@ package com.test.so.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Collection;
@@ -30,7 +29,8 @@ import javax.persistence.TemporalType;
 @Table(name = "personne")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+        property = "id",
+        scope = Personne.class)
 public class Personne implements Serializable {
 
     private int id;

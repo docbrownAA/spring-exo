@@ -46,6 +46,15 @@ public class PersonneController {
     public ResponseEntity createPersonne(@RequestBody Personne personne) {
         return new ResponseEntity(personneService.create(personne), HttpStatus.OK);
     }
+    @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = {MediaType.APPLICATION_JSON_VALUE}, value="/{id_personne}")
+    public ResponseEntity updatePersonne(@PathVariable("id_personne") Integer id_personne, @RequestBody Personne personne) {
+        Personne currPersonne = personneService.findById(id_personne);
+        currPersonne.setNom(personne.getNom());
+        currPersonne.setPrenom(personne.getPrenom());
+        currPersonne.setDate_naissance(personne.getDate_naissance());
+        return new ResponseEntity(personneService.update(currPersonne), HttpStatus.OK);
+    }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/personne/{id_personne}")
     public ResponseEntity delete(@PathVariable("id_personne") int idPersonne) {

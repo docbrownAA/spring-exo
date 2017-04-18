@@ -43,4 +43,11 @@ public class PersonneServiceImpl implements PersonneService {
         personneRepository.delete(personne);
     }
 
+    @Override
+    public Personne update(Personne personne) {
+        return personneRepository.save(personne);
+    }
+    
+    
+
 }
