@@ -26,5 +26,18 @@ public class PersonneDetailServiceImpl implements PersonneDetailService {
     public PersonneDetail create(PersonneDetail personneDetail) {
         return personneDetailRepository.save(personneDetail);
     }
+    
+    @Override
+    public PersonneDetail save(PersonneDetail personneDetail) {
+        return personneDetailRepository.save(personneDetail);
+    }
+
+    @Override
+    public void delete(Integer personneDetailId) {
+       personneDetailRepository.delete(personneDetailId);
+    }
+    
+    
+    
 
 }

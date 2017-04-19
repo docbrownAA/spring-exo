@@ -19,9 +19,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "personne_detail")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class PersonneDetail extends EntiteGenerique implements Serializable {
 
     @OneToOne

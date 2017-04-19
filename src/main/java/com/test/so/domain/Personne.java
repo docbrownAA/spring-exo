@@ -27,10 +27,10 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "personne")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id",
-        scope = Personne.class)
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id",
+//        scope = Personne.class)
 public class Personne implements Serializable {
 
     private int id;

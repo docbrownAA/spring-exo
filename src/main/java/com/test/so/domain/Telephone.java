@@ -16,9 +16,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "telephone")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class Telephone extends EntiteGenerique implements java.io.Serializable {
 
     private String libelle;

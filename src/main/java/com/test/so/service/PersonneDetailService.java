@@ -10,4 +10,6 @@ import com.test.so.domain.Personne;
 public interface PersonneDetailService {
     PersonneDetail findByPersonne(Personne personne);
     PersonneDetail create(PersonneDetail personneDetail);
+    PersonneDetail save(PersonneDetail personneDetail);
+    void delete(Integer personneDetailId);
 }
