@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.test.so.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -32,7 +27,7 @@ public class PersonneAdresse implements Serializable {
     private Date fin;
     private boolean principale;
 
-    @JsonIgnoreProperties("personneAdresses")
+    @JsonIgnoreProperties("personnesAdresses")
     private Personne personne;
     @JsonIgnoreProperties("personneAdresses")
     private Adresse adresse;

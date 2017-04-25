@@ -2,7 +2,8 @@ package com.test.so.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,18 +20,18 @@ import javax.persistence.OneToMany;
 @Entity
 public class Adresse implements Serializable {
 
-    private int id;
+    private Integer id;
     private String libelle;
     @JsonIgnoreProperties("adresses")
     private Ville ville;
 
     @JsonIgnoreProperties("adresse")
-    private Set<PersonneAdresse> personneAdresses = new HashSet<PersonneAdresse>();
+    private Collection<PersonneAdresse> personneAdresses = new ArrayList<PersonneAdresse>();
 
     public Adresse() {
     }
 
-    public Adresse(String libelle, int id) {
+    public Adresse(String libelle, Integer id) {
         this.libelle = libelle;
         this.id = id;
     }
@@ -38,16 +39,16 @@ public class Adresse implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id_adresse")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     @OneToMany(mappedBy = "adresse")
-    public Set<PersonneAdresse> getPersonneAdresses() {
+    public Collection<PersonneAdresse> getPersonneAdresses() {
         return personneAdresses;
     }
 
@@ -61,7 +62,7 @@ public class Adresse implements Serializable {
         this.ville = ville;
     }
 
-    public void setPersonneAdresses(Set<PersonneAdresse> personneAdresses) {
+    public void setPersonneAdresses(Collection<PersonneAdresse> personneAdresses) {
         this.personneAdresses = personneAdresses;
     }
 

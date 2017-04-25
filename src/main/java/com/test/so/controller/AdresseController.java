@@ -49,7 +49,7 @@ public class AdresseController {
     }
     
     @RequestMapping(method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_UTF8_VALUE,
-            produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, value = "/nouveau")
+            produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     public ResponseEntity createAdresse(@RequestBody  Adresse adresse){
         return new ResponseEntity(adresseService.save(adresse),HttpStatus.CREATED);
     }

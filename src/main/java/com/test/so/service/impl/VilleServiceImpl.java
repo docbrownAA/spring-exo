@@ -43,5 +43,10 @@ public class VilleServiceImpl implements VilleService {
         return villeRepository.findAll();
     }
     
+    @Override
+    public Ville findById(Integer id){
+        return villeRepository.findOne(id);
+    }
+    
     
 }

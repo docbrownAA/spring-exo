@@ -1,12 +1,10 @@
 package com.test.so.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,7 +32,7 @@ import javax.persistence.TemporalType;
 public class Personne implements Serializable {
 
     private int id;
-    private Date date_naissance;
+    private Date dateNaissance;
     private String nom;
     private String prenom;
 
@@ -45,14 +43,14 @@ public class Personne implements Serializable {
     PersonneDetail personneDetail;
 
     @JsonIgnoreProperties("personne")
-    private Set<PersonneAdresse> personnesAdresses = new HashSet<PersonneAdresse>();
+    private Collection<PersonneAdresse> personnesAdresses = new ArrayList<PersonneAdresse>();
 
     public Personne() {
     }
 
     public Personne(int id, Date date_naissance, String nom, String prenom, Collection<Telephone> telephones, PersonneDetail personneDetail) {
         this.id = id;
-        this.date_naissance = date_naissance;
+        this.dateNaissance = date_naissance;
         this.nom = nom;
         this.prenom = prenom;
         this.telephones = telephones;
@@ -71,11 +69,11 @@ public class Personne implements Serializable {
     }
 
     @OneToMany(mappedBy = "personne")
-    public Set<PersonneAdresse> getPersonnesAdresses() {
+    public Collection<PersonneAdresse> getPersonnesAdresses() {
         return personnesAdresses;
     }
 
-    public void setPersonnesAdresses(Set<PersonneAdresse> personnesAdresses) {
+    public void setPersonnesAdresses(Collection<PersonneAdresse> personnesAdresses) {
         this.personnesAdresses = personnesAdresses;
     }
 
@@ -90,12 +88,13 @@ public class Personne implements Serializable {
     }
 
     @Temporal(TemporalType.DATE)
-    public Date getDate_naissance() {
-        return date_naissance;
+    @Column(name="date_naissance")
+    public Date getDateNaissance() {
+        return dateNaissance;
     }
 
-    public void setDate_naissance(Date date_naissance) {
-        this.date_naissance = date_naissance;
+    public void setDateNaissance(Date dateNaissance) {
+        this.dateNaissance = dateNaissance;
     }
 
     public String getNom() {
